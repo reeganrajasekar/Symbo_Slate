@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SymboSlate</title>
+    <link rel="stylesheet" href="/css/bootstrap.css">
+    <link rel="stylesheet" href="/js/bootstrap.js">
+</head>
+<body style="background:#ECECEC;">
+    <nav class="navbar navbar-expand-sm navbar-dark justify-content-between" style="padding:0% 100px;background:#461143;color:#FFFFFF">
+        <a class="navbar-brand" href="/admin">
+          <img src="/images/Logo/Logo2.png" alt="logo" style="width:167px;padding: 6px;">
+        </a>
+        
+        <ul class="navbar-nav float-right" style="font: normal normal normal 20px/25px IBM Plex Sans;">
+          <li class="nav-item">
+            <a class="nav-link active" href="/admin">Hi Admin</a>
+          </li>
+          <li class="nav-item">
+            <span class="nav-link">|</span>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/logout">Logout</a>
+          </li>
+        </ul>
+    </nav>
+    <section style="display: flex;justify-content: center;align-items: center;margin:50px">
+        <div class="container" style="padding:20px;height:auto;background-color: #FFF;display: grid;grid-template-columns:50% 50%;">
+            <div style="height:100%;width:100%;padding-top:10px">
+                <a href="/admin">
+                <img src="/images/Icons/arrow.png" alt="" width="26px" height="26px" style="display: inline-block;margin-top:-10px">
+                </a>
+                <h2 style="display:inline-block;margin-top:5px;font: normal normal 600 30px/42px IBM Plex Sans;color:#461143;">&ensp;Edit Event Details</h2>
+                <div style="height:80%;display: flex;justify-content: center;align-items: center;">
+                    <img src="/images/calander.png" alt="" style="width:75%;">
+                </div>
+            </div>
+            <div style="height:auto;width:100%;">
+                <div style="background-color: #ECECEC;height:auto;margin-right:40px;padding:20px 50px">
+                    <h2 style="font: normal normal bold 25px/33px IBM Plex Sans;text-align: center;">Event Information</h2>
+                    <form action="/admin/editEvent/<%= data[0]._id %>" method="post">
+                        <label style="font: normal normal medium 18px/1px IBM Plex Sans;padding-bottom: 5px;">Event Name</label><br>
+                        <input value="<%= data[0].title %>" required type="text" name="title" style="padding:10px;border:none;width:100%;height:35px;margin-bottom:8px;border-radius: 0px 20px;background: #FFFFFF 0% 0% no-repeat padding-box;">
+                        <label style="font: normal normal medium 18px/1px IBM Plex Sans;padding-bottom: 5px;">Event Description</label><br>
+                        <textarea required name="desc" style="padding:10px;border:none;width:100%;margin-bottom:8px;border-radius: 0px 20px;background: #FFFFFF 0% 0% no-repeat padding-box;" rows="2"><%= data[0].desc %></textarea>
+                        <label style="font: normal normal medium 18px/1px IBM Plex Sans;padding-bottom: 5px;">Event Url</label><br>
+                        <input value="<%= data[0].url %>" required type="url" name="url" style="padding:10px;border:none;width:100%;height:35px;margin-bottom:8px;border-radius: 0px 20px;background: #FFFFFF 0% 0% no-repeat padding-box;">
+                        <label style="font: normal normal medium 18px/1px IBM Plex Sans;padding-bottom: 5px;">Event Date</label><br>
+                        <input value="<%= data[0].stime.getFullYear()+'-'+(data[0].stime.getMonth() + 1).toString().padStart(2, '0') +'-'+data[0].stime.getDate() %>" required pattern="\d{2}-\d{2}-\d{4}" type="date" name="date" style="padding:10px;border:none;width:100%;height:35px;margin-bottom:8px;border-radius: 0px 20px;background: #FFFFFF 0% 0% no-repeat padding-box;">
+                        <div class="row" style="margin-bottom: 10px;">
+                            <div class="col-6">
+                                <label style="font: normal normal medium 18px/1px IBM Plex Sans;padding-bottom: 5px;">Start Time</label><br>
+                                <input required value="<%= String(data[0].stime.getHours()).padStart(2, '0') +':'+String(data[0].stime.getMinutes()).padStart(2, '0') %>"  type="time" name="stime" style="padding:10px;border:none;width:100%;height:35px;margin-bottom:8px;border-radius: 0px 20px;background: #FFFFFF 0% 0% no-repeat padding-box;">        
+                            </div>
+                            <div class="col-6">
+                                <label style="font: normal normal medium 18px/1px IBM Plex Sans;padding-bottom: 5px;">End Time</label><br>
+                                <input required value="<%= String(data[0].etime.getHours()).padStart(2, '0') +':'+String(data[0].etime.getMinutes()).padStart(2, '0') %>"  type="time" name="etime" style="padding:10px;border:none;width:100%;height:35px;margin-bottom:8px;border-radius: 0px 20px;background: #FFFFFF 0% 0% no-repeat padding-box;">        
+                            </div>
+                        </div>
+                        <div style="display:flex;justify-content:flex-end;align-items:flex-end;margin-top: 25px;">
+                            <a href="/admin/"><button type="button" style="
+                            width: 100px;
+                            height: 40px;
+                            border-radius: 0px 20px;
+                            text-align: center;
+                            font: normal normal medium 20px/1px IBM Plex Sans;
+                            color:#000;
+                            padding:5px;font-weight: bold;margin-right: 10px;border:none">Cancel</button></a>
+                            <button type="submit" style="
+                            width: 130px;
+                            height: 40px;
+                            border-radius: 0px 20px;
+                            text-align: center;
+                            font: normal normal medium 20px/1px IBM Plex Sans;
+                            color:#FFFFFF;
+                            background:#461143;
+                            padding:5px;font-weight: bold;">UPDATE</button>
+                        </div>
+                        <a href="/admin/deleteEvent/<%= data[0]._id %>" style="font: normal normal normal 20px/25px IBM Plex Sans;color:#461143;text-decoration: none;">Delete this event</a> 
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+</body>
+</html>
